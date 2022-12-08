@@ -12,7 +12,7 @@ class plane:
 
     '''
     
-    SPEED = 50       # Pixels per second
+    SPEED = 20       # Pixels per second
     ROTSP = np.pi/6  # Hardest it can turn
 
     # -----------------------------------------------------
@@ -20,9 +20,9 @@ class plane:
     # edege points if the center of the plane would align with
     # the center of the coord system
     POINTS = np.array([
-        [ 0 , 5. ],
-        [ 2.5 , -2.5],
-        [ -2.5 , -2.5]
+        [ 20 , 0. ],
+        [ -10 , -10],
+        [ -10 , 10]
     ])
 
     def __init__( self , pos , theta ):
@@ -60,8 +60,8 @@ class plane:
         rot_mat = np.zeros( ( 2 , 2 ) )
 
         rot_mat[ 0 , 0 ] =  direc_vec[ 0 ]   # cos( x )
-        rot_mat[ 0 , 1 ] = -direc_vec[ 1 ]   # -sin( x )
+        rot_mat[ 0 , 1 ] =  direc_vec[ 1 ]   # sin( x )
         rot_mat[ 1 , 0 ] =  direc_vec[ 1 ]   # sin( x )
-        rot_mat[ 1 , 1 ] =  direc_vec[ 0 ]   # cos( x )
+        rot_mat[ 1 , 1 ] =  -direc_vec[ 0 ]  # -cos( x )
 
         return plane.POINTS@rot_mat + self.pos
