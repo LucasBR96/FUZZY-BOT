@@ -68,5 +68,7 @@ def fuzz_decision( fuzzy_vision ):
         min( UP , H_BEHIND , LEFT_D )
     )
 
-    d_sum = decision.sum()
-    return np.dot( ( decision / d_sum ) , OUT_VEC  )
+    direction = np.exp(decision)
+    d_sum = direction.sum()
+    resp = np.dot( ( decision / d_sum ) , OUT_VEC  )
+    return resp
