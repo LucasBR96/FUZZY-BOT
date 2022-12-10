@@ -38,7 +38,10 @@ def line_seg_intercept( p1 , p2 , q1 , q2 ):
 
 class simu:
 
-    
+    # Colision Flags ------------------------------------
+    NO_COL    = 0
+    INNER_COL = 1
+    OUTER_COL = 2
 
     def __init__( self , pl : plane , sqr : env ):
 
@@ -62,24 +65,44 @@ class simu:
         self.pl.update_pos( dt )
         
         #--------------------------------------------------
-        # updating square pos
-        while self.collide():
-            self.sqr.reset_pos()
-        
+        # checking for colisions and giving proper handling
+        while True:
+
+            flag = self.collide()
+
+            if flag == simu.NO_COL:
+                break
+
+            if flag == simu.INNER_COL:
+                self.sqr.reset_pos()
+                continue
+
+            if flag == simu.OUTER_COL:
+                sqr = self.sqr
+                xlim = np.array( [ 0 , sqr.screen_w ] )
+                ylim = np.array( [ 0 , sqr.screen_h ] )
+
+                self.pl.reset_pos( xlim , ylim )
 
     def collide( self ):
 
         pl_pts = self.pl.get_triangle()
         sqr_pts = self.sqr.get_edges()
+        out_pts = self.sqr.get_outer()
 
         for i in range( 3 ):
             p1 = pl_pts[ i ]
             p2 = pl_pts[ ( i + 1 )%3 ]
             for j in range( 4 ):
+
                 q1 = sqr_pts[ j ]
                 q2 = sqr_pts[ ( j + 1 )%4 ]
-
                 if line_seg_intercept( p1 , p2 , q1 , q2 ):
-                    return True
+                    return simu.INNER_COL
+                
+                q1 = out_pts[ j ]
+                q2 = out_pts[ ( j + 1 )%4 ]
+                if line_seg_intercept( p1 , p2 , q1 , q2 ):
+                    return simu.OUTER_COL
 
-        return False
+        return simu.NO_COL

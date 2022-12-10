@@ -27,7 +27,7 @@ sqr = env(
 )
 simm = simu( pl , sqr )
 
-dt = 1/45
+dt = 1/30
 if __name__ == "__main__":
     # keep game running till running is true
     while True:

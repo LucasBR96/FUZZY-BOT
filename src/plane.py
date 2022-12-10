@@ -30,6 +30,15 @@ class plane:
         self.pos   = pos
         self.theta = theta
 
+    def reset_pos( self , xlim , ylim ):
+
+        r = np.random.random( 2 )
+        inf_lmt = np.array( [ xlim[ 0 ] , ylim[ 0 ] ] )
+        sup_lmt = np.array( [ xlim[ 1 ] , ylim[ 1 ] ] )
+
+        self.pos = inf_lmt*r + sup_lmt*( 1 - r )
+        self.theta = 0 
+
     def get_u_vector( self ):
         
         theta = self.theta

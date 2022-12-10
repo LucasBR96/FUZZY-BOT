@@ -25,4 +25,13 @@ class env:
             self.pos + np.array( [ env.SIDE , -env.SIDE ] ),  # TOP RIGHT
             self.pos + np.array( [ -env.SIDE , -env.SIDE ] ), # TOP LEFT
             self.pos + np.array( [ -env.SIDE , env.SIDE ] )   # BOTTOM LEFT
-        ]) 
+        ])
+
+    def get_outer( self ):
+
+        return np.array([
+            [ 0 , 0 ],
+            [ self.screen_w , 0 ],
+            [ self.screen_w , self.screen_h ],
+            [ 0 , self.screen_h ]
+        ])
