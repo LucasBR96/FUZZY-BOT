@@ -1,0 +1,85 @@
+from src.plane import plane
+from src.env import env
+
+import numpy as np
+import pygame
+from pygame.locals import *
+
+kb = pygame.key
+
+def is_clockwise( u , v ):
+
+    '''
+    check if the orientation between two 2d vectors is clockwise
+    by the right hand rule
+    '''
+
+    return u[0]*v[1] - u[1]*v[0] < 0
+
+def orientation( a , b , c ):
+
+    '''
+    returns if the orietation of segments AB and AC are clockwise
+
+    '''
+
+    u = b - a
+    v = c - a
+    return is_clockwise( u , v )
+
+def line_seg_intercept( p1 , p2 , q1 , q2 ):
+    
+    a = orientation( p1 , p2 , q1 )
+    b = orientation( p1 , p2 , q2 )
+    c = orientation( q1 , q2 , p1 )
+    d = orientation( q1 , q2 , p2 )
+
+    return ( a != b ) and( c != d )
+
+class simu:
+
+    
+
+    def __init__( self , pl : plane , sqr : env ):
+
+        self.pl = pl
+        self.sqr = sqr
+
+    def update( self , **kwargs ):
+
+        dt = kwargs.get( 'dt' , 1/30 )
+        klst = kb.get_pressed()
+
+        #-------------------------------------------------
+        # Updating plane position, interactive mode            
+        s = 0
+        if klst[ K_UP ]:
+            s = 1
+        elif klst[ K_DOWN ]:
+            s = -1
+        if s:
+            self.pl.update_theta( s , dt )
+        self.pl.update_pos( dt )
+        
+        #--------------------------------------------------
+        # updating square pos
+        while self.collide():
+            self.sqr.reset_pos()
+        
+
+    def collide( self ):
+
+        pl_pts = self.pl.get_triangle()
+        sqr_pts = self.sqr.get_edges()
+
+        for i in range( 3 ):
+            p1 = pl_pts[ i ]
+            p2 = pl_pts[ ( i + 1 )%3 ]
+            for j in range( 4 ):
+                q1 = sqr_pts[ j ]
+                q2 = sqr_pts[ ( j + 1 )%4 ]
+
+                if line_seg_intercept( p1 , p2 , q1 , q2 ):
+                    return True
+
+        return False

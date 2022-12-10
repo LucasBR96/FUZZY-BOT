@@ -20,7 +20,11 @@ pl = plane(
     np.array([ SCREEN_W/2 , SCREEN_H/2 ]),
     0
 )
-sqr = env( 0.75*np.array([ SCREEN_W , SCREEN_H ]) )
+sqr = env(
+    0.75*np.array([ SCREEN_W , SCREEN_H ]),
+    SCREEN_W,
+    SCREEN_H
+)
 simm = simu( pl , sqr )
 
 dt = 1/45
@@ -37,21 +41,8 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            
-            key_pressed = pygame.key.get_pressed()
-            holding_up = key_pressed[ K_UP ]
-            holding_down = key_pressed[ K_DOWN ]
-
-        #-------------------------------------------------
-        # Updating plane position            
-        s = 0
-        if holding_up:
-            s = 1
-        elif holding_down:
-            s = -1
-        if s:
-            pl.update_theta( s , dt )
-        pl.update_pos( dt )
+        
+        simm.update( dt = dt )
 
         #-------------------------------------------------
         # Drawing the plane
@@ -64,8 +55,6 @@ if __name__ == "__main__":
 
         sqr_points = sqr.get_edges()
         pygame.draw.lines( DISPLAY_SURF , BOX_COLOR , True , sqr_points, width = 2 )
-
-
-        simm.collide()
+        
         # Update our window
         pygame.display.update()
