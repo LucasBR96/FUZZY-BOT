@@ -41,6 +41,12 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            
+            #------------------------------------------
+            # Switching between interactive and fuzzy modes
+            if event.type == KEYUP:
+                if event.key == K_SPACE:
+                    simm.switch_mode()
         
         simm.update( dt = dt )
 
