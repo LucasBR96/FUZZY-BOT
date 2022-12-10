@@ -12,17 +12,17 @@ class plane:
 
     '''
     
-    SPEED = 20       # Pixels per second
-    ROTSP = np.pi/6  # Hardest it can turn
+    SPEED = 30       # Pixels per second
+    ROTSP = np.pi/4  # Hardest it can turn
 
     # -----------------------------------------------------
     # The airplane is triangular in shape, these would be its
     # edege points if the center of the plane would align with
     # the center of the coord system
     POINTS = np.array([
-        [ 20 , 0. ],
-        [ -10 , -10],
-        [ -10 , 10]
+        [ 15 , 0. ],
+        [ -7 , -7],
+        [ -7 , 7]
     ])
 
     def __init__( self , pos , theta ):
@@ -54,7 +54,10 @@ class plane:
 
     def update_theta( self , direc , dt):
         
-        assert( abs( direc ) <= 1. )
+        try:
+            assert( abs( direc ) <= 1. )
+        except AssertionError:
+            print( direc )
 
         omega = plane.ROTSP*direc
         theta = self.theta + omega*dt

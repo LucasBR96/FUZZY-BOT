@@ -101,12 +101,12 @@ class simu:
                 continue
 
             if flag == simu.OUTER_COL:
-                sqr = self.sqr
-                xlim = np.array( [ 0 , sqr.screen_w ] )
-                ylim = np.array( [ 0 , sqr.screen_h ] )
+                # sqr = self.sqr
+                # xlim = np.array( [ 0 , sqr.screen_w ] )
+                # ylim = np.array( [ 0 , sqr.screen_h ] )
 
-                self.pl.reset_pos( xlim , ylim )
-
+                # self.pl.reset_pos( xlim , ylim )
+                break
     def collide( self ):
 
         pl_pts = self.pl.get_triangle()

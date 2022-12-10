@@ -25,7 +25,7 @@ sqr = env(
     SCREEN_W,
     SCREEN_H
 )
-simm = simu( pl , sqr )
+simm = simu( pl , sqr, False )
 
 dt = 1/30
 if __name__ == "__main__":

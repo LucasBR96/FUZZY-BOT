@@ -6,9 +6,9 @@ STRAIGHT   = 2
 SOFT_CCLCK = 3
 HARD_CCLCK = 4
 
-OUT_VEC = np.array([
-    -1. , -.5 , 0 , .5 , 1. 
-])
+OUT_VEC = np.array(
+    [1. , .5 , 0 , -.5 , -1. ]
+    )
 
 def fuzz_decision( fuzzy_vision ):
     
@@ -59,16 +59,22 @@ def fuzz_decision( fuzzy_vision ):
         min( DOWN , H_BEHIND , LEFT_D ),
         min( LEFT , V_BEHIND , UP_D ),
         min( UP , H_BEHIND , RIGHT_D )
+        
     )
 
     decision[ HARD_CCLCK ] = max(
         min( RIGHT , V_BEHIND , UP_D ),
         min( DOWN , H_BEHIND , RIGHT_D ),
         min( LEFT , V_BEHIND , DOWN_D ),
-        min( UP , H_BEHIND , LEFT_D )
+        min( UP , H_BEHIND , LEFT_D ),
+
+        min( UP , UP_D ),
+        min( RIGHT , RIGHT_D ),
+        min( LEFT , LEFT_D ),
+        min( DOWN , DOWN_D )
     )
 
-    direction = np.exp(decision)
-    d_sum = direction.sum()
-    resp = np.dot( ( decision / d_sum ) , OUT_VEC  )
-    return resp
+    # direction = np.exp(decision)
+    d_sum = max( decision.sum() , 1e-5 )
+    resp = np.dot( ( decision ) , OUT_VEC  )/( d_sum )
+    return np.clip( resp , -1 , 1. )
