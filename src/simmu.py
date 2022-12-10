@@ -1,6 +1,7 @@
 from src.plane import plane
 from src.env import env
 from src.fuzz import fuzzy_info
+from src.model import fuzz_decision
 
 import numpy as np
 import pygame
@@ -44,36 +45,46 @@ class simu:
     INNER_COL = 1
     OUTER_COL = 2
 
-    def __init__( self , pl : plane , sqr : env ):
+    def __init__( self , pl : plane , sqr : env , interactive : bool = True ):
 
         self.pl = pl
         self.sqr = sqr
+        self.inter = interactive
+
+    def update_plane( self , dt ):
+
+        klst = kb.get_pressed()
+        if self.inter:
+            s = 0
+            if klst[ K_UP ]:
+                s = 1
+            elif klst[ K_DOWN ]:
+                s = -1
+        
+        else:
+            fuzzy_vision = fuzzy_info(
+                self.pl.pos,
+                self.pl.theta,
+                self.sqr.pos,
+                self.sqr.SIDE
+            )
+            s = fuzz_decision( fuzzy_vision )
+
+        self.pl.update_theta( s , dt )
+        self.pl.update_pos( dt )
+
+    def switch_mode( self ):
+        self.inter = not self.inter
+        
+        s = "ON" if self.inter else "OFF"
+        print( f"interactive mode {s}")
 
     def update( self , **kwargs ):
 
-        dt = kwargs.get( 'dt' , 1/30 )
-        klst = kb.get_pressed()
-
         #-------------------------------------------------
         # Updating plane position, interactive mode            
-        s = 0
-        if klst[ K_UP ]:
-            s = 1
-        elif klst[ K_DOWN ]:
-            s = -1
-        if s:
-            self.pl.update_theta( s , dt )
-        self.pl.update_pos( dt )
-
-        #-------------------------------------------------
-        # just displaying the fuzzy_vector
-        fuzz_vec = fuzzy_info(
-            self.pl.pos,
-            self.pl.theta,
-            self.sqr.pos,
-            self.sqr.SIDE,
-        )
-        print( fuzz_vec[ 3 ] , fuzz_vec[ 4 ] , fuzz_vec[ 5 ] )
+        dt = kwargs.get( 'dt' , 1/30 )
+        self.update_plane( dt )
 
         #--------------------------------------------------
         # checking for colisions and giving proper handling

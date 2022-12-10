@@ -7,21 +7,21 @@ SOFT_CCLCK = 3
 HARD_CCLCK = 4
 
 OUT_VEC = np.array([
-    [ -1. , -.5 , 0 , .5 , 1. ]
+    -1. , -.5 , 0 , .5 , 1. 
 ])
 
 def fuzz_decision( fuzzy_vision ):
     
     #--------------------------------------------------
     # Horizontal vision
-    LEFT = fuzzy_vision[ 0 ]
+    LEFT = fuzzy_vision[ 2 ]
     H_BEHIND = fuzzy_vision[ 1 ]
-    RIGHT    = fuzzy_vision[ 2 ]
+    RIGHT    = fuzzy_vision[ 0 ]
 
     #--------------------------------------------------
     # Vertical Vision
     UP = fuzzy_vision[ 3 ]
-    V_BEHIND = fuzzy_vision[ 4]
+    V_BEHIND = fuzzy_vision[ 4 ]
     DOWN = fuzzy_vision[ 5 ]
 
     #--------------------------------------------------
