@@ -43,10 +43,17 @@ def fuzzy_info( plane_pos , plane_theta , box_pos , box_side ):
     box_x , box_y = box_pos
 
     return np.array([
-        fuzzy_slope( x , box_x - box_side, box_x + box_side ), #RIGHT
-        fuzzy_slope( y , box_y - box_side, box_y + box_side ), #DOWN
-        fuzzy_hat( theta , 0 , np.pi ),                        #UP
-        fuzzy_hat( theta , 0.5*np.pi , 1.5*np.pi ),            #LEFT
-        fuzzy_hat( theta , np.pi , 2*np.pi ),                  #DOWN
-        1 - fuzz_trap( theta , 0 , .5*np.pi , 1.5*np.pi , 2*np.pi )   #RIGHT
+
+        fuzzy_slope( x , box_x - box_side, box_x ),           #LEFT
+        fuzzy_hat( x , box_x - box_side , box_x + box_side ), #H_BEHIND
+        1 - fuzzy_slope( x , box_x, box_x + box_side ),       #RIGHT
+
+        1 - fuzzy_slope( y , box_y - box_side, box_y ),       #UP
+        fuzzy_hat( y , box_y - box_side , box_y + box_side ), #V_BEHIND
+        fuzzy_slope( y , box_y, box_y + box_side ),           #DOWN
+
+        fuzzy_hat( theta , 0 , np.pi ),                        #DOWN_D
+        fuzzy_hat( theta , 0.5*np.pi , 1.5*np.pi ),            #LEFT_D
+        fuzzy_hat( theta , np.pi , 2*np.pi ),                  #UP_D
+        1 - fuzz_trap( theta , 0 , .5*np.pi , 1.5*np.pi , 2*np.pi )   #RIGHT_D
     ])

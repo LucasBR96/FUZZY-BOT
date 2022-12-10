@@ -1,5 +1,6 @@
 from src.plane import plane
 from src.env import env
+from src.fuzz import fuzzy_info
 
 import numpy as np
 import pygame
@@ -63,7 +64,17 @@ class simu:
         if s:
             self.pl.update_theta( s , dt )
         self.pl.update_pos( dt )
-        
+
+        #-------------------------------------------------
+        # just displaying the fuzzy_vector
+        fuzz_vec = fuzzy_info(
+            self.pl.pos,
+            self.pl.theta,
+            self.sqr.pos,
+            self.sqr.SIDE,
+        )
+        print( fuzz_vec[ 3 ] , fuzz_vec[ 4 ] , fuzz_vec[ 5 ] )
+
         #--------------------------------------------------
         # checking for colisions and giving proper handling
         while True:
