@@ -53,6 +53,7 @@ class simu:
         dt = kwargs.get( 'dt' , 1/30 )
         klst = kb.get_pressed()
 
+        
         #-------------------------------------------------
         # Updating plane position, interactive mode            
         s = 0
