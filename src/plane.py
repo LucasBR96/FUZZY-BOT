@@ -12,7 +12,7 @@ class plane:
 
     '''
     
-    SPEED = 30       # Pixels per second
+    SPEED = 40       # Pixels per second
     ROTSP = np.pi/4  # Hardest it can turn
 
     # -----------------------------------------------------

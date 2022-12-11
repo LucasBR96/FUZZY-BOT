@@ -8,7 +8,7 @@ from src.simmu import simu
 import numpy as np
 import sys
 
-SCREEN_W , SCREEN_H = 1000 , 600
+SCREEN_W , SCREEN_H = 1200 , 800
 BACKGROUND = ( 255 , 255 , 255 )
 PLANE_COLOR = ( 0 , 0 , 0 )
 BOX_COLOR = ( 0 , 0 , 255 )
