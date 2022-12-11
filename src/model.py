@@ -16,9 +16,9 @@ def fuzz_decision( fuzzy_vision ):
     
     #--------------------------------------------------
     # Horizontal vision
-    LEFT = fuzzy_vision[ 2 ]
+    LEFT     = fuzzy_vision[ 0 ]
     H_BEHIND = fuzzy_vision[ 1 ]
-    RIGHT    = fuzzy_vision[ 0 ]
+    RIGHT    = fuzzy_vision[ 2 ]
 
     #--------------------------------------------------
     # Vertical Vision
@@ -92,5 +92,5 @@ def fuzz_decision( fuzzy_vision ):
 
     # direction = np.exp(decision)
     d_sum = max( decision.sum() , 1e-5 )
-    resp = np.dot( ( decision ) , OUT_VEC  )/( d_sum )
+    resp = np.dot( decision , OUT_VEC  )/( d_sum )
     return np.clip( resp , -1 , 1. )

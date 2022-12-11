@@ -44,9 +44,9 @@ def fuzzy_info( plane_pos , plane_theta , box_pos , box_side ):
 
     return np.array([
 
-        fuzzy_slope( x , box_x - box_side, box_x ),           #LEFT
+        1 - fuzzy_slope( x , box_x, box_x + box_side ),       #LEFT
         fuzzy_hat( x , box_x - box_side , box_x + box_side ), #H_BEHIND
-        1 - fuzzy_slope( x , box_x, box_x + box_side ),       #RIGHT
+        fuzzy_slope( x , box_x - box_side, box_x ),           #RIGHT
 
         1 - fuzzy_slope( y , box_y - box_side, box_y ),       #UP
         fuzzy_hat( y , box_y - box_side , box_y + box_side ), #V_BEHIND
