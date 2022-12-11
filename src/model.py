@@ -1,13 +1,15 @@
 import numpy as np
 
 HARD_CLOCK = 0
-SOFT_CLOCK = 1
-STRAIGHT   = 2
-SOFT_CCLCK = 3
-HARD_CCLCK = 4
+CLOCKWISE  = 1
+SOFT_CLOCK = 2
+STRAIGHT   = 3
+SOFT_CCLCK = 4
+COUT_CLOCK = 5
+HARD_CCLCK = 6
 
 OUT_VEC = np.array(
-    [1. , .5 , 0 , -.5 , -1. ]
+    [1. , .75 , .5 , 0 , -.5 , -.75 , -1. ]
     )
 
 def fuzz_decision( fuzzy_vision ):
