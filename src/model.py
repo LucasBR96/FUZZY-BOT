@@ -74,9 +74,9 @@ def fuzz_decision( fuzzy_vision ):
         min( LEFT , UP , UP_D ),
         min( RIGHT , UP , RIGHT_D ),
         min( RIGHT , DOWN , DOWN_D ),
-        min( LEFT , DOWN , DOWN_D ),
+        min( LEFT , DOWN , LEFT_D ),
 
-        min( LEFT , V_BEHIND , LEFT ),
+        min( LEFT , V_BEHIND , LEFT_D ),
         min( H_BEHIND , UP , UP_D )
     )
 
@@ -92,5 +92,7 @@ def fuzz_decision( fuzzy_vision ):
 
     # direction = np.exp(decision)
     d_sum = max( decision.sum() , 1e-5 )
-    resp = np.dot( decision , OUT_VEC  )/( d_sum )
+    decision = decision/d_sum
+
+    resp = np.dot( decision , OUT_VEC  )
     return np.clip( resp , -1 , 1. )

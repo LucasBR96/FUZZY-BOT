@@ -6,8 +6,9 @@ from src.model import fuzz_decision
 import numpy as np
 import pygame
 from pygame.locals import *
-
 kb = pygame.key
+
+import collections as clc 
 
 def is_clockwise( u , v ):
 
